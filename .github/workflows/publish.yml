@@ -1,0 +1,31 @@
+name: Publish to NPM
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release channel"
+        required: true
+        default: "latest"
+        type: choice
+        options:
+          - latest
+          - beta
+          - prev
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Publish
+        run: npm publish --tag ${{ inputs.tag }} --access public
+        env:
+          NPM_TOKEN: ${{secrets.NPM_KEY}}
