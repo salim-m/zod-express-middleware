@@ -1,5 +1,5 @@
 {
-  "name": "zod-express-middleware",
+  "name": "@salim-m/zod-express-middleware",
   "version": "1.0.0",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
